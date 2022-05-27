@@ -25,7 +25,7 @@ AZUL2 = (0, 100, 255)
 NEGRO = (0, 0, 0)
 
 ALTURA_BLOQUE = 20
-RAPIDEZ = 40
+RAPIDEZ = 15
 
 
 class serpienteGameAI:
@@ -33,14 +33,14 @@ class serpienteGameAI:
     def __init__(self, w=640, h=480):
         self.w = w
         self.h = h
-        # init display
+        # Inicia la pantalla de juego
         self.display = pygame.display.set_mode((self.w, self.h))
         pygame.display.set_caption('Serpiente')
         self.clock = pygame.time.Clock()
         self.reset()
 
     def reset(self):
-        # init game state
+        # Inicia el estado del codigo
         self.direccion = Direccion.DERECHA
 
         self.cabeza = Point(self.w/2, self.h/2)
@@ -77,7 +77,7 @@ class serpienteGameAI:
         # 3. Comprueba si se acabó el juego
         reward = 0
         game_over = False
-        if self.is_collision() or self.frame_iteration > 100*len(self.serpiente):
+        if self.hay_colision() or self.frame_iteration > 100*len(self.serpiente):
             game_over = True
             reward = -10
             return reward, game_over, self.puntaje
@@ -96,7 +96,7 @@ class serpienteGameAI:
         # 6. Retorna el game over y el puntaje
         return reward, game_over, self.puntaje
 
-    def is_collision(self, pt=None):
+    def hay_colision(self, pt=None):
         if pt is None:
             pt = self.cabeza
         # Si colisiona con la pared
